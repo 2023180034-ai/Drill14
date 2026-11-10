@@ -39,8 +39,11 @@ class Bird:
         row = frame // 5
         column = frame % 5
         source_y = 506 - (row + 1) * FRAME_HEIGHT
-        self.image.clip_draw(
+        flip = '' if self.direction == 1 else 'h'
+        self.image.clip_composite_draw(
             column * FRAME_WIDTH, source_y,
             FRAME_WIDTH, FRAME_HEIGHT,
+            0, flip,
             self.x, self.y,
+            FRAME_WIDTH, FRAME_HEIGHT,
         )
