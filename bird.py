@@ -6,8 +6,16 @@ import game_framework
 FRAME_WIDTH = 183
 FRAME_HEIGHT = 169
 FRAME_COUNT = 10
-FRAMES_PER_SECOND = 10
-MOVE_SPEED_PPS = 100
+WINGBEATS_PER_SECOND = 4
+FRAMES_PER_SECOND = FRAME_COUNT * WINGBEATS_PER_SECOND
+DRAW_WIDTH = 55
+DRAW_HEIGHT = 51
+
+PIXEL_PER_METER = 10.0 / 0.3
+FLY_SPEED_KMPH = 36.0
+FLY_SPEED_MPM = FLY_SPEED_KMPH * 1000.0 / 60.0
+FLY_SPEED_MPS = FLY_SPEED_MPM / 60.0
+FLY_SPEED_PPS = FLY_SPEED_MPS * PIXEL_PER_METER
 
 
 class Bird:
@@ -22,10 +30,10 @@ class Bird:
         frame_time = game_framework.frame_time
         self.frame = (self.frame + FRAMES_PER_SECOND * frame_time) % FRAME_COUNT
 
-        half_width = FRAME_WIDTH / 2
+        half_width = DRAW_WIDTH / 2
         left_bound = half_width
         right_bound = get_canvas_width() - half_width
-        self.x += self.direction * MOVE_SPEED_PPS * frame_time
+        self.x += self.direction * FLY_SPEED_PPS * frame_time
 
         if self.x < left_bound:
             self.x = left_bound
@@ -45,5 +53,5 @@ class Bird:
             FRAME_WIDTH, FRAME_HEIGHT,
             0, flip,
             self.x, self.y,
-            FRAME_WIDTH, FRAME_HEIGHT,
+            DRAW_WIDTH, DRAW_HEIGHT,
         )
